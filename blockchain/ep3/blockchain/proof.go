@@ -21,7 +21,7 @@ import (
 // Difficulty in this example is costant, but in real blockchain you need to
 //implemenet an algorithm that would slowly increment this difficulty
 //over a large period of time
-const Difficulty = 20
+const Difficulty = 12
 
 // ProofOfWork is the struct
 type ProofOfWork struct {
@@ -79,7 +79,7 @@ func (pow *ProofOfWork) Run() (int, []byte) {
 	for nonce < math.MaxInt64 {
 		data := pow.InitData(nonce)
 		hash = sha256.Sum256(data)
-		fmt.Printf("\r%x", hash)
+		//fmt.Printf("\r%x", hash)
 
 		intHash.SetBytes(hash[:]) //convert our hash into a bigInteger
 		//compare our hash with the target and if the come back with -1 we break

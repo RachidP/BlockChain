@@ -55,7 +55,7 @@ func Deserialize(data []byte) *Block {
 
 	reader := bytes.NewReader(data)   //make new reader
 	decoder := gob.NewDecoder(reader) //make new decoder
-	err := decoder.Decode(block)
+	err := decoder.Decode(&block)
 	HandleErr(err)
 	return &block
 

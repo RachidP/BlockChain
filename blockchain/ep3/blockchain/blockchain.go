@@ -50,15 +50,20 @@ func InitialBlockChain() *BlockChain {
 			err := txn.Set(genesis.Hash, genesis.Serialize())
 			HandleErr(err)
 			err = txn.Set([]byte("lh"), genesis.Hash)
+
 			lastHash = genesis.Hash
+
+			return err
+
+		} else {
+			// if the blockchain has  already been stored into db
+			item, err := txn.Get([]byte("lh"))
+			HandleErr(err)
+			lastHash, err = item.Value()
 			return err
 
 		}
-		// if the blockchain has  already been stored into db
-		item, err := txn.Get([]byte("lh"))
-		HandleErr(err)
-		lastHash, err = item.Value()
-		return err
+
 	})
 
 	HandleErr(err)
@@ -98,7 +103,7 @@ func (chain *BlockChain) AddBlock(data string) {
 
 }
 
-//Iterator convert a BlockChian into a BlochainIterator
+//Iterator convert a BlockChian struct into a BlochainIterator struct
 func (chain *BlockChain) Iterator() *BlockChainIterator {
 	iter := BlockChainIterator{
 		CurrentHash: chain.LastHash,
@@ -119,5 +124,6 @@ func (iter *BlockChainIterator) Next() *Block {
 		return err
 	})
 	HandleErr(err)
+	iter.CurrentHash = block.PrevHash
 	return block
 }

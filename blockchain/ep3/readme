@@ -1,0 +1,18 @@
+//add a new block
+go run main.go add -block "first block"
+
+
+//print blockchain
+go run main.go add print
+
+
+// try to print the blockchain after you change the
+//difficulty in proof.go. you will see that
+//Pow: is false. so that means our implementation we doesn't have
+// a dynamic prof of work difficuly, because the Nonce of our
+//block is stored in the DB but not the actual validation boolean
+//that's means when we are going to print it the actual hash not been signed for
+//the new difficulty, and so when we run the validate function
+//on the nonce comes back as a failure
+ 
+go run main.go add print
